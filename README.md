@@ -26,7 +26,7 @@ As you can see in the starting diagram, users have an operation that returns the
 <br>
 <br>
 
-## Suppose the implementation of this method is like the following pseudocode:
+## Suppose that the application of this method is as the following pseudo-code:
 
 
 ```  
@@ -61,7 +61,7 @@ class RegisteredUser{
 
 ## Questions
 
-We reviewed the pseudocode of the `getTotal` method of the `RegisteredUser` class. We are concerned that its design is a little bit vulnerable as it is not clear whether it considers possible changes in the future, other scenarios and their impact:
+We reviewed the pseudo-code of the `getTotal` method of the `RegisteredUser` class. We are concerned that its design is a little bit vulnerable as it is not clear whether it considers possible changes in the future, other scenarios and their impact:
 
 * What problems do you detect in the operation and give us some reasons for your answer?
 * Give us a propose an alternative solution (like in the example) that corrects the problems of the `getTotal` method of `RegisteredUser` class that you have detected in the previous question. Make all the changes you consider necessary in any of the classes of the statement.
