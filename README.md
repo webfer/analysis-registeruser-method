@@ -111,4 +111,5 @@ In addition, I have refactored the `if/else if` statement to switch statements t
 })();
 
 ```
-This is just an analysis. Also, this approach should be tested in a controlled environment within a real project, with more information available.
+## Conclusion
+This is just a basic analysis. Also, this approach should be tested in a controlled environment within a real project, with more information available.
