@@ -112,4 +112,4 @@ In addition, I have refactored the `if/else if` statement to switch statements t
 
 ```
 ## Conclusion
-This is just a basic analysis. Also, this approach should be tested in a controlled environment within a real project, with more information available.
+This is just a basic analysis. Also, this approach should be tested in a controlled environment within a real project, with more information available, so that you can see whether a particular behaviour of the class, possible solutions and improvements.
