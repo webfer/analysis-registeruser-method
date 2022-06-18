@@ -9,7 +9,7 @@
 
 </p>
 
-### 🚧 **Pre-analysis** 
+## Pre-analysis 🚧 
 We already have a previous analysis that we can use as a beginning point, but that will have to be adjusted and improved. This is software for managing an online movie streaming platform.
 
 <p align="center">
@@ -18,63 +18,97 @@ We already have a previous analysis that we can use as a beginning point, but th
 
 </p>
 
-* Before starting, clone the repository or download it to the local machine.
-* In the project directory, locate the `.env` file and replace the environment variable value `YOUR_OWN_GOOGLE_API_KEY` with your own Google Api Key
-* 🔜 
+As you can see in the starting diagram, users have an operation that returns the total amount paid for all the services they have requested. The price of a service is calculated as follows:
+
+* For all users who want to watch multimedia content by streaming, the streaming price of this multimedia content is applied.
+* For all users who want to download multimedia content from the platform, the download price of this multimedia content applies.
+* If the content is premium, in any of the above cases the additional charge specified in the additionalFee attribute is added.
 <br>
 <br>
 
-## Install dependencies
+## Suppose the implementation of this method is like the following pseudocode:
 
-In the project directory, you can run:
+
 ```  
-npm install 
+class RegisteredUser{
+  
+  constructor(services=[]){
+    this.services = services;
+  }
+  
+  getTotal () {
+    let total = 0;
+    
+    this.services.forEach(service,index => {
+      let multimediaContent = service.getMultimediaContent();
+      
+      if (typeof service == StreamingService) {
+        total += multimediaContent.streamingPrice;
+      } else if (typeof service == DownloadService) {
+        total += multimediaContent.downloadPrice;
+      }
+      
+      if (typeof multimediaContent == PremiumContent) {
+        total += multimediaContent.additionalFee:
+      }
+      
+    })
+    
+    return total
+  }
+}
 ```
 
-## Available Scripts
+## Questions
 
-In the project directory, you can run:
+We reviewed the pseudocode of the `getTotal` method of the `RegisteredUser` class. We are concerned that its design is a little bit vulnerable as it is not clear whether it considers possible changes in the future, other scenarios and their impact:
 
-```
-npm start
-```
+* What problems do you detect in the operation and give us some reasons for your answer?
+* Give us a propose an alternative solution (like in the example) that corrects the problems of the `getTotal` method of `RegisteredUser` class that you have detected in the previous question. Make all the changes you consider necessary in any of the classes of the statement.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Analysis  🚀
+As a result of my initial analysis, my initial approach would be, that all the services should inherit from a common base class.
+You can then give the base class a method that returns the cost. In this case `getCost()`. This method should be used just below the `multimediaContent` function, as well, as increment the price in every forEach function loop.
 
-```
-npm test
-```
-
-Launches the test runner in the interactive watch mode.\
-This project has a simple test on the `Header.tsx` component and `App.tsx`  component.\
-It is just an example of testing on a React project.
+In addition, I have refactored the `if/else if` statement to switch statements to optimize.
 
 ```
-npm run build
+/**
+ *
+ * @class RegisteredUser
+ */
+
+(() => {
+  class RegisteredUser {
+    constructor(services = []) {
+      this.services = services;
+    }
+
+    getTotal() {
+      let total = 0;
+      this.services.forEach(service, (index) => {
+        let multimediaContent = service.getMultimediaContent();
+        total += this.getCost(multimediaContent);
+      });
+      return total;
+    }
+
+    getCost(multimediaContent) {
+      switch (typeof service) {
+        case service === StreamingService: {
+          return multimediaContent.streamingPrice;
+        }
+        case service === DownloadService: {
+          return multimediaContent.downloadPrice;
+        }
+        default: {
+          return multimediaContent.additionalFee;
+        }
+      }
+    }
+  }
+})();
+
 ```
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-
-```
-npm run eject
-```
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-
-
+This is just an analysis. Also, this approach should be tested in a controlled environment within a real project, with more information available.
